@@ -1,0 +1,65 @@
+services: 
+  postgres-db:
+    container_name: postgres-db
+
+    image: postgres:14.5
+    
+
+    restart: always
+    networks:
+      - instawork-docker-net
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ${GITHUB_ROOT}/instawork-take-home/data/local-dev/volumes/postgres/data:/var/lib/postgresql/data
+
+  backend-app:
+    container_name: backend-app
+    build:
+      context: ${GITHUB_ROOT}/instawork-take-home/apps/python/backend/
+      dockerfile: Dockerfile 
+    restart: always
+    depends_on:
+      - postgres-db
+    networks:
+      - instawork-docker-net
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres-db:5432/${POSTGRES_DB}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: postgres-db
+      POSTGRES_PORT: 5432
+      DJANGO_SETTINGS_MODULE: src.django_project_manager.settings
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+    volumes:
+      - ${GITHUB_ROOT}/instawork-take-home/apps/python/backend:/app
+
+  web-app:
+    container_name: web-app
+    build:
+      context: ${GITHUB_ROOT}/instawork-take-home/apps/javascript/client/team_management/
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - instawork-docker-net
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_BACKEND_URL: http://localhost:8000
+      # Add any necessary environment variables here
+      NODE_ENV: development
+    volumes:
+      - ${GITHUB_ROOT}/instawork-take-home/apps/javascript/client/team_management/src:/app/src
+    #   - /app/node_modules
+
+networks:
+  instawork-docker-net:
+    name: instawork-docker-net
+    driver: bridge
