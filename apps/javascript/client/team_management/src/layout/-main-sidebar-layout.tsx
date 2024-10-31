@@ -4,14 +4,6 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/layout/app-sidebar";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
 import { Separator } from "@radix-ui/react-separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 

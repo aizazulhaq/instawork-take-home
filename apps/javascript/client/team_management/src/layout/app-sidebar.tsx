@@ -1,28 +1,14 @@
 import * as React from "react"
 import {
-  BookOpen,
-  Bot,
   Command,
-  Frame,
-  LifeBuoy,
-  Map,
-  PieChart,
-  Send,
-  Settings2,
-  SquareTerminal,
   HouseIcon,
   UsersRound
-  
 } from "lucide-react"
 
 import { NavMain } from "@/layout/nav-main"
-import { NavProjects } from "@/layout/nav-projects"
-import { NavSecondary } from "@/layout/nav-secondary"
-import { NavUser } from "@/layout/nav-user"
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
