@@ -62,9 +62,6 @@ nginx.conf
 
 # Data folder for temporary or generated data files
 data/
-*.csv
-*.json
-*.xml
 
 # System Files
 *.DS_Store
