@@ -6,6 +6,7 @@ import {
 import { AppSidebar } from "@/layout/app-sidebar";
 import { Separator } from "@radix-ui/react-separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function MainSidebarLayout({
   children,
@@ -24,6 +25,7 @@ export default function MainSidebarLayout({
             </div>
           </header>
           {children}
+          <Toaster />
         </SidebarInset>
       </SidebarProvider>
     </TooltipProvider>

@@ -16,7 +16,6 @@ import { Input } from "@/components/ui/input";
 import { editTeamMemberFormSchema } from "./-data-handling";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { TeamMember } from "../-static-data";
-import { useEffect } from "react";
 
 export function TeamMemberForm({
   memberData,
@@ -33,28 +32,11 @@ export function TeamMemberForm({
       last_name: memberData?.last_name || "",
       email: memberData?.email || "",
       phone: memberData?.phone ? String(memberData.phone) : "",
-      role: (memberData?.role ? memberData.role.toLowerCase() : "regular") as "regular" | "admin", // Type assertion added
+      role: (memberData?.role ? memberData.role.toLowerCase() : "regular") as "regular" | "admin",
     },
   });
 
   const navigate = useNavigate();
-
-  
-
-  useEffect(() => {
-    if (memberData) {
-      form.reset({
-        id: memberData.id,
-        first_name: memberData.first_name,
-        last_name: memberData.last_name,
-        email: memberData.email,
-        phone: memberData.phone ? String(memberData.phone) : "",
-        role: (memberData.role ? memberData.role.toLowerCase() : "regular") as
-          | "regular"
-          | "admin",
-      });
-    }
-  }, [memberData, form]);
 
   return (
     <Form {...form}>
@@ -68,7 +50,6 @@ export function TeamMemberForm({
               <FormControl>
                 <Input placeholder="John" {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
@@ -82,7 +63,6 @@ export function TeamMemberForm({
               <FormControl>
                 <Input placeholder="Doe" {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
@@ -96,7 +76,6 @@ export function TeamMemberForm({
               <FormControl>
                 <Input placeholder="example@example.com" {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
@@ -110,7 +89,6 @@ export function TeamMemberForm({
               <FormControl>
                 <Input placeholder="123-456-7890" {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}

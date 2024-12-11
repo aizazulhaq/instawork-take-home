@@ -2,13 +2,14 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { TeamMemberForm } from "./-form";
 import { newTeamMemberFormSchema } from "./-data-handling";
 import { z } from "zod";
+import { useToast } from "@/hooks/use-toast"
 
 export const Route = createFileRoute("/team/new/")({
   component: Index,
 });
 
 function Index() {
-
+  const { toast } = useToast()
   const navigate = useNavigate();
 
   const onSubmitNewTeamMember = async (
@@ -24,9 +25,21 @@ function Index() {
     });
   
     if (response.ok) {
+      toast({
+        title: 'Saved!',
+        description: 'Team member saved successfully.',
+      })
       navigate({ to: "/team" });
+
     } else {
-      console.error("Failed to submit:", response.statusText);
+      const errorData = await response.json();
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong. We could not save the profile',
+        description: Object.entries(errorData.error)
+          .map(([field, messages]) => `${field.charAt(0).toUpperCase() + field.slice(1)}: ${Array.isArray(messages) ? messages.join(', ') : messages}`)
+          .join('\n') || 'There was a problem with your request.',
+      })
     }
   };
 
